@@ -12,3 +12,5 @@ def is_valid_ip(ip):
     return bool(pattern.match(ip))
 
 # Check for valid IP addresses
+invalid_ips = data[~data['source_ip'].astype(str).apply(is_valid_ip)]
+print(invalid_ips)
