@@ -31,3 +31,8 @@ valid_protocols = ['TCP', 'TLS', 'SSH', 'POP3', 'DNS', 'HTTPS', 'SMTP', 'FTP', '
 # check for invalid protocol values
 invalid_protocols = data[~data['protocol'].isin(valid_protocols)]
 print(invalid_protocols)
+
+def is_valid_bytes(bytes):
+    try:
+        bytes = int(bytes)
+        return bytes >= 0
