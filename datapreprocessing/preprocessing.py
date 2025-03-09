@@ -36,3 +36,6 @@ def is_valid_bytes(bytes):
     try:
         bytes = int(bytes)
         return bytes >= 0
+    except ValueError:
+        return False
+
