@@ -43,3 +43,13 @@ def is_valid_bytes(bytes):
 invalid_bytes = data[~data['bytes_transferred'].apply(is_valid_bytes)]
 print(invalid_bytes)
 
+def is_valid_threat_level(threat_level):
+    try:
+        threat_level = int(threat_level)
+        return 0 <= threat_level <= 2
+    except ValueError
+        return False
+
+# Check for invalid threat levels
+invalid_threat_levels = data[~data['threat_level'].apply(is_valid_threat_level)]
+print(invalid_threat_levels)
