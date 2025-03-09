@@ -39,3 +39,7 @@ def is_valid_bytes(bytes):
     except ValueError:
         return False
 
+# Check for invalid bytes transferred
+invalid_bytes = data[~data['bytes_transferred'].apply(is_valid_bytes)]
+print(invalid_bytes)
+
