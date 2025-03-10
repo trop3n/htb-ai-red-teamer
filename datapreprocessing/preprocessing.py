@@ -13,7 +13,7 @@ def is_valid_ip(ip):
 
 # Check for valid IP addresses
 invalid_ips = data[~data['source_ip'].astype(str).apply(is_valid_ip)]
-print(invalid_ips)
+# print(invalid_ips)
 
 def is_valid_port(port):
     try:
@@ -24,13 +24,13 @@ def is_valid_port(port):
     
 # Check for invalid port numbers
 invalid_ports = data[~data['destination_port'].apply(is_valid_port)]
-print(invalid_ports)
+# print(invalid_ports)
 
 valid_protocols = ['TCP', 'TLS', 'SSH', 'POP3', 'DNS', 'HTTPS', 'SMTP', 'FTP', 'UDP', 'HTTP']
 
 # check for invalid protocol values
 invalid_protocols = data[~data['protocol'].isin(valid_protocols)]
-print(invalid_protocols)
+# print(invalid_protocols)
 
 def is_valid_bytes(bytes):
     try:
@@ -41,7 +41,7 @@ def is_valid_bytes(bytes):
 
 # Check for invalid bytes transferred
 invalid_bytes = data[~data['bytes_transferred'].apply(is_valid_bytes)]
-print(invalid_bytes)
+# print(invalid_bytes)
 
 def is_valid_threat_level(threat_level):
     try:
@@ -52,7 +52,7 @@ def is_valid_threat_level(threat_level):
 
 # Check for invalid threat levels
 invalid_threat_levels = data[~data['threat_level'].apply(is_valid_threat_level)]
-print(invalid_threat_levels)
+# print(invalid_threat_levels)
 
 # the ignore errors covers the fact that there might be some overlap between indexes that match other invalid criterias
 data = data.drop(invalid_ips.index, errors='ignore')
