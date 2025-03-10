@@ -47,9 +47,18 @@ def is_valid_threat_level(threat_level):
     try:
         threat_level = int(threat_level)
         return 0 <= threat_level <= 2
-    except ValueError
+    except ValueError:
         return False
 
 # Check for invalid threat levels
 invalid_threat_levels = data[~data['threat_level'].apply(is_valid_threat_level)]
 print(invalid_threat_levels)
+
+# the ignore errors covers the fact that there might be some overlap between indexes that match other invalid criterias
+data = data.drop(invalid_ips.index, errors='ignore')
+data = data.drop(invalid_ports.index, errors='ignore')
+data = data.drop(invalid_protocols.index, errors='ignore')
+data = data.drop(invalid_bytes.index, errors='ignore')
+data = data.drop(invalid_threat_levels.index, errors='ignore')
+
+print(data.describe(include='all'))
