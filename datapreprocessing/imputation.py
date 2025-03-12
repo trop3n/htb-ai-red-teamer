@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np 
 import re
 from ipaddress import ip_address
+from sklearn.impute import SimpleImputer
 
 df = pd.read_csv('demo_dataset.csv')
 
@@ -23,3 +24,12 @@ def is_valid_ip(ip):
     return ip
 
 df['source_ip'] = df['source_ip'].apply(is_valid_ip)
+
+numeric_cols = ['destination_port', 'bytes_transferred', 'threat_level']
+categorical_cols = ['protocol']
+
+num_imputer = SimpleImputer(strategy='median')
+df[numeric_cols] = num_imputer.fit_transform(df[numeric_cols])
+
+cat_imputer = SimpleImputer(strategy='most_frequent')
+df[categorical_cols] = cat_imputer.fit_transform(df[categorical_cols])
