@@ -37,3 +37,9 @@ df[categorical_cols] = cat_imputer.fit_transform(df[categorical_cols])
 
 knn_imputer = KNNImputer(n_neightbors=5)
 df[numeric_cols] = knn_imputer.fit_transform(df[numeric_cols])
+
+valid_protocols = ['TCP', 'TLS', 'SSH', 'POP3', 'DNS', 'HTTPS', 'SMTP', 'FTP', 'UDP', 'HTTP']
+df.loc[~df['protocol'].isin(valid_protocols), 'protocol'] = df['protocol'].mode()[0]
+
+df['source_ip'] = df['source_ip'].fillna('0.0.0.0')
+df['destination_port'] = df['destination_port'].clip(lower=0, upper=65535)
