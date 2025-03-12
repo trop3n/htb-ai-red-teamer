@@ -43,3 +43,5 @@ df.loc[~df['protocol'].isin(valid_protocols), 'protocol'] = df['protocol'].mode(
 
 df['source_ip'] = df['source_ip'].fillna('0.0.0.0')
 df['destination_port'] = df['destination_port'].clip(lower=0, upper=65535)
+
+print(df.describe(include='all'))
