@@ -3,6 +3,7 @@ import numpy as np
 import re
 from ipaddress import ip_address
 from sklearn.impute import SimpleImputer
+from sklearn.impute import KNNImputer
 
 df = pd.read_csv('demo_dataset.csv')
 
@@ -33,3 +34,6 @@ df[numeric_cols] = num_imputer.fit_transform(df[numeric_cols])
 
 cat_imputer = SimpleImputer(strategy='most_frequent')
 df[categorical_cols] = cat_imputer.fit_transform(df[categorical_cols])
+
+knn_imputer = KNNImputer(n_neightbors=5)
+df[numeric_cols] = knn_imputer.fit_transform(df[numeric_cols])
