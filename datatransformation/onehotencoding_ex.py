@@ -52,3 +52,8 @@ encoded = encoder.fit_transform(df[['protocol']])
 
 encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out(['protocol']))
 df = pd.concat([df.drop('protocol', axis=1), encoded_df], axis=1)
+
+import numpy as np
+
+# apply logarithmic transformation to a skewed feature to reduce its skewness
+df["bytes_transferred"] = np.log1p(df["bytes_transferred"]) # add 1 to avoid log(0)
