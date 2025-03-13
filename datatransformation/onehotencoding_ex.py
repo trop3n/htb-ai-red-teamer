@@ -57,3 +57,15 @@ import numpy as np
 
 # apply logarithmic transformation to a skewed feature to reduce its skewness
 df["bytes_transferred"] = np.log1p(df["bytes_transferred"]) # add 1 to avoid log(0)
+
+from sklearn.model_selection import train_test_split
+
+# separate features (X) and target (y)
+X = df.drop("threat_level", axis=1)
+y = df["threat_level"]
+
+# initial split: 80% training, 20% testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1337)
+
+# Second split: from the 80% training portion, allocate 60% for final training and 20% for validation
+X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.25, random_state=1337)
