@@ -13,6 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
+import joblib
 
 # URL of the dataset
 # url = "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip"
@@ -150,3 +151,28 @@ def preproces_message(message):
 
 # preprocess and vectorize messages
 processed_messages = [preproces_message(msg) for msg in new_messages]
+
+# transform preprocessed messages into feature vectors
+X_new = best_model.named_steps["vectorizer"].transform(processed_messages)
+
+# predict with the trained classifier
+predictions = best_model.named_steps["classifer"].predict(X_new)
+prediction_probabilities = best_model.named_steps["classifier"].predict_proba(X_new)
+
+# display predictions and probabilities for each evaluated message
+for i, msg in enumerate(new_messages):
+    prediction = "Spam" if predictions[i] == 1 else "Not-Spam"
+    spam_probability = prediction_probabilities[i][1] # probability of being spam
+    ham_probability = prediction_probabilities[i][0] # probability of being not spam
+
+    print(f"Message: {msg}")
+    print(f"Prediction: {prediction}")
+    print(f"Spam Probability: {spam_probability:.2f}")
+    print(f"Not-Spam Probability: {ham_probability:.2f}")
+    print("-" * 50)
+
+# save the trained model to a file for future use
+model_filename = 'spam_detection_model.joblib'
+joblib.dump(best_model, model_filename)
+
+print(f"Model saved to {model_filename}")
