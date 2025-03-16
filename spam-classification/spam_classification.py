@@ -2,9 +2,10 @@ import requests
 import zipfile
 import io
 import os
+import pandas as pd
 
 #URL of the dataset
-url = "https://archive.ics.uci.edui/static/public/228/sms+spam+collection.zip"
+url = "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip"
 # Download the dataset
 response = requests.get(url)
 if response.status_code == 200:
@@ -20,3 +21,11 @@ with zipfile.ZipFile(io.BytesIO(response.content)) as z:
 # list extracted files
 extracted_files = os.listdir("sms_spam_collection")
 print("Extracted files:", extracted_files)
+
+# load the dataset
+df = pd.read_csv(
+    "sms_spam_collection/SMSSpamCollection",
+    sep="\t",
+    header=None,
+    names=["label", "message"],
+)
