@@ -5,6 +5,7 @@ import os
 import pandas as pd
 import nltk
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 import re
 
 # URL of the dataset
@@ -68,3 +69,13 @@ df["message"] = df["message"].apply(lambda x: re.sub(r"[^a-z\s$!]", "", x))
 print("\n=== AFTER REMOVING PUNCTUATION & NUMBERS (except $ and !) ===")
 print(df["message"].head(5))
 
+# Split each message into individual tokens
+df["message"] = df["message"].apply(word_tokenize)
+print("\n=== AFTER TOKENIZATION ===")
+print(df["message"].head(5))
+
+# define a set of English stop words and remove them from the tokens
+stop_words = set(stopwords.words("english"))
+df["message"] = df["message"].apply(lambda x: [word for word in x if word not in stop_words])
+print("\n=== AFTER REMOVING STOP WORDS ===")
+print(df["message"].head(5))
