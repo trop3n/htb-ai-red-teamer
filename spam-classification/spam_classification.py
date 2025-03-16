@@ -108,3 +108,32 @@ pipeline = Pipeline([
     ("vectorizer", vectorizer)
     ("classifier", MultinomialNB)
 ])
+
+# Define the parameter grid for hyperparameter tuning
+param_grid = {
+    "classifier__alpha": [0.01, 0.1, 0.15, 0.2, 0.25, 0.5, 0.75, 1.0]
+}
+
+# perform the grid search with 5-fold cross-validation and the F1-score as metric
+grid_search = GridSearchCV(
+    pipelinem
+    param_grid,
+    cv=5
+    scoring="f1"
+)
+
+# fit the grid search on the full dataset
+grid_search.fit(df["message"], y)
+
+#extract the best model identified by the grid search
+best_model = grid_search.best_estimator_
+print("Best model parameters:", grid_search.best_params_)
+
+# Example SMS messages for evaluation
+new_messages = [
+    "Congratulations! You've won a $1000 Walmart gift card. Go to http://bit.ly/1234 to claim now.",
+    "Hey, are we still meeting up for lunch today?",
+    "Urgent! Your account has been compromised. Verify your details here: www.fakebank.com/verify",
+    "Reminder: Your appointment is scheduled for tomorrow at 10am.",
+    "FREE entry in a weekly competition to win an iPad. Just text WIN to 80085 now!",
+]
