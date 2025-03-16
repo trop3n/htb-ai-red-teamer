@@ -3,6 +3,7 @@ import zipfile
 import io
 import os
 import pandas as pd
+import numpy as np
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -137,3 +138,15 @@ new_messages = [
     "Reminder: Your appointment is scheduled for tomorrow at 10am.",
     "FREE entry in a weekly competition to win an iPad. Just text WIN to 80085 now!",
 ]
+
+# preprocess function that mirrors the training-time preprocessing
+def preproces_message(message):
+    message = message.lower()
+    message = re.sub(r"[^a-z\s$!]", "", message)
+    tokens = word_tokenize(message)
+    tokens = [word for word in tokens if word not in stop_words]
+    tokens = [stemmer.stem(word) for word in tokens]
+    return " ".join(tokens)
+
+# preprocess and vectorize messages
+processed_messages = [preproces_message(msg) for msg in new_messages]
