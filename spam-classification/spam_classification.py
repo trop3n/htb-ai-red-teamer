@@ -40,3 +40,9 @@ print(df.info())
 
 # check for missing values
 print("Missing values:\n", df.isnull().sum())
+
+# check for duplicates
+print("Duplicate entries:", df.duplicated().sum())
+
+# remove any duplicates if any
+df = df.drop_duplicates()
