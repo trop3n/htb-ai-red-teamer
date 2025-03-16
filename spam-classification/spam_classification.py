@@ -4,24 +4,26 @@ import io
 import os
 import pandas as pd
 import nltk
+from nltk.tokenize import word_tokenize
+import re
 
-#URL of the dataset
-url = "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip"
-# Download the dataset
-response = requests.get(url)
-if response.status_code == 200:
-    print("Download successful")
-else:
-    print("Failed to download the dataset")
+# URL of the dataset
+# url = "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip"
+# # Download the dataset
+# response = requests.get(url)
+# if response.status_code == 200:
+#     print("Download successful")
+# else:
+#     print("Failed to download the dataset")
 
-# extract the dataset
-with zipfile.ZipFile(io.BytesIO(response.content)) as z:
-    z.extractall("sms_spam_collection")
-    print("Extraction successful")
+# # extract the dataset
+# with zipfile.ZipFile(io.BytesIO(response.content)) as z:
+#     z.extractall("sms_spam_collection")
+#     print("Extraction successful")
 
 # list extracted files
-extracted_files = os.listdir("sms_spam_collection")
-print("Extracted files:", extracted_files)
+# extracted_files = os.listdir("sms_spam_collection")
+# print("Extracted files:", extracted_files)
 
 # load the dataset
 df = pd.read_csv(
@@ -60,3 +62,9 @@ print(df.head(5))
 df["message"] = df["message"].str.lower()
 print("\n=== AFTER LOWERCASING ===")
 print(df["message"].head(5))
+
+# Remove non-essential punctuation and numbers, keep useful symbols like $ and !
+df["message"] = df["message"].apply(lambda x: re.sub(r"[^a-z\s$!]", "", x))
+print("\n=== AFTER REMOVING PUNCTUATION & NUMBERS (except $ and !) ===")
+print(df["message"].head(5))
+
