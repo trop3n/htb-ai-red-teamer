@@ -6,6 +6,7 @@ import pandas as pd
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
 import re
 
 # URL of the dataset
@@ -78,4 +79,15 @@ print(df["message"].head(5))
 stop_words = set(stopwords.words("english"))
 df["message"] = df["message"].apply(lambda x: [word for word in x if word not in stop_words])
 print("\n=== AFTER REMOVING STOP WORDS ===")
+print(df["message"].head(5))
+
+# stem each token to reduce words to their base form
+stemmer = PorterStemmer()
+df["message"] = df["message"].apply(lambda x: [stemmer.stem(word) for word in x])
+print("\n=== AFTER STEMMING ===")
+print(df["message"].head(5))
+
+# rejoin tokens into a single string for feature extraction
+df["message"] = df["message"].apply(lambda x: " ".join(x))
+print("\n=== AFTER JOINING TOKENS BACK INTO STRINGS ===")
 print(df["message"].head(5))
