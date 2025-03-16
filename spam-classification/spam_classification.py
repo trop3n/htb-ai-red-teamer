@@ -10,3 +10,8 @@ if response.status_code == 200:
     print("Download successful")
 else:
     print("Failed to download the dataset")
+
+# extract the dataset
+with zipfile.ZipFile(io.BytesIO(response.content)) as z:
+    z.extractall("sms_spam_collection")
+    print("Extraction successful")
