@@ -8,6 +8,10 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import re
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import Pipeline
 
 # URL of the dataset
 # url = "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip"
@@ -91,3 +95,16 @@ print(df["message"].head(5))
 df["message"] = df["message"].apply(lambda x: " ".join(x))
 print("\n=== AFTER JOINING TOKENS BACK INTO STRINGS ===")
 print(df["message"].head(5))
+
+# init CountVectorizer with bigrams, min_df, and max_df to focus on relevant terms
+vectorizer = CountVectorizer(min_df=1, max_df=0.9, ngram_range=(1, 2))
+# fit and transform the message column
+X = vectorizer.fit_transform(df["message"])
+# labels (target variable)
+y = df["label"].apply(lambda x: 1 if x == "spam" else 0) # converting labels to 1 and 0
+
+# Build the pipeline by combining vectorization and classification
+pipeline = Pipeline([
+    ("vectorizer", vectorizer)
+    ("classifier", MultinomialNB)
+])
