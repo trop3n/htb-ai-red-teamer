@@ -29,3 +29,14 @@ df = pd.read_csv(
     header=None,
     names=["label", "message"],
 )
+
+# display basic information about the dataset
+print("-------------------- HEAD --------------------")
+print(df.head())
+print("-------------------- DESCRIBE --------------------")
+print(df.describe())
+print("-------------------- INFO --------------------")
+print(df.info())
+
+# check for missing values
+print("Missing values:\n", df.isnull().sum())
