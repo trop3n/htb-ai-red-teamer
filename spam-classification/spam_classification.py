@@ -3,6 +3,7 @@ import zipfile
 import io
 import os
 import pandas as pd
+import nltk
 
 #URL of the dataset
 url = "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip"
@@ -46,3 +47,16 @@ print("Duplicate entries:", df.duplicated().sum())
 
 # remove any duplicates if any
 df = df.drop_duplicates()
+
+# Download necessary NLTK data files
+nltk.download("punkt")
+nltk.download("punkt_tab")
+nltk.download("stopwords")
+
+print("=== BEFORE ANY PREPROCESSING ===")
+print(df.head(5))
+
+# convert all message text to lowercase
+df["message"] = df["message"].str.lower()
+print("\n=== AFTER LOWERCASING ===")
+print(df["message"].head(5))
