@@ -116,9 +116,9 @@ param_grid = {
 
 # perform the grid search with 5-fold cross-validation and the F1-score as metric
 grid_search = GridSearchCV(
-    pipelinem
+    pipeline,
     param_grid,
-    cv=5
+    cv=5,
     scoring="f1"
 )
 
