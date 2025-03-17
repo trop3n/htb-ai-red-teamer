@@ -77,3 +77,7 @@ numeric_features = [
     'dst_host_serror_rate', 'dst_host_srv_serror_rate', 'dst_host_rerror_rate', 
     'dst_host_srv_rerror_rate'   
 ]
+
+# combine encoded categorical variabls and numeric features
+train_set = encoded.join(df[numeric_features])
+multi_y = df['attack_map']
