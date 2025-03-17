@@ -143,3 +143,9 @@ plt.show()
 # Classification report for Test Set
 print("Classification Report for Test Set:")
 print(classification_report(test_y, test_multi_predictions, target_names=class_labels))
+
+# save the trained model to a file
+model_filename = 'network_anomaly_detection_model.joblib'
+joblib.dump(rf_model_multi, model_filename)
+
+print(f"Model saved to {model_filename}")
