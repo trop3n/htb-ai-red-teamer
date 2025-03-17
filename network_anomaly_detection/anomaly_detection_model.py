@@ -13,7 +13,7 @@ url = "https://academy.hackthebox.com/storage/modules/292/KDD_dataset.zip"
 # Download the zip file and extract its contents
 response = requests.get(url)
 z = zipfile.ZipFile(io.BytesIO(response.content))
-z.extracall('.') # extracts to the current directory
+z.extractall('.') # extracts to the current directory
 
 # set the file path to the dataset
 file_path = r'KDD+.txt'
@@ -30,3 +30,34 @@ columns = [
     'dst_host_srv_diff_host_rate', 'dst_host_serror_rate', 'dst_host_srv_serror_rate', 
     'dst_host_rerror_rate', 'dst_host_srv_rerror_rate', 'attack', 'level'
 ]
+
+# read the combined NSL-KDD dataset into a DataFrame
+df = pd.read_csv(file_path, names=columns)
+print(df.head())
+
+# binary classification target
+# maps normal traffic to - and any type of attack to 1
+df['attack_flag'] = df['attack'].apply(lambda a: 0 if a == 'normal' else 1)
+
+# multi-class classification target categories
+dos_attacks = ['apache2', 'back', 'land', 'neptune', 'mailbomb', 'pod', 'processtable', 'smurf', 'teardrop', 'udpstorm', 'worm']
+probe_attacks = ['ipsweep', 'mscan', 'nmap', 'portsweep', 'saint', 'satan']
+privilege_attacks = ['buffer_overflow', 'loadmodule', 'perl', 'ps', 'rootkit', 'sqlattack', 'xterm']
+access_attacks = ['ftp_write', 'guess_passwd', 'http_tunnel', 'imap', 'multihop', 'named', 'phf', 'sendmail', 'snmpgetattack', 'snmpguess', 'spy', 'warezclient', 'warezmaster', 'xclock', 'xsnoop']
+
+def map_attack(attack):
+    if attack in dos_attacks:
+        return 1
+    elif attack in probe_attacks:
+        return 2
+    elif attack in privilege_attacks:
+        return 3
+    elif attack in access_attacks:
+        return 4
+    else:
+        return 0
+    
+# assign multi-class category to each row
+df['attack_map'] = df['attack'].apply(map_attack)
+
+# Encoding categorical variables
