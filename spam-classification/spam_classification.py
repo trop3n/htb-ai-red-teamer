@@ -107,8 +107,8 @@ y = df["label"].apply(lambda x: 1 if x == "spam" else 0) # converting labels to 
 
 # Build the pipeline by combining vectorization and classification
 pipeline = Pipeline([
-    ("vectorizer", vectorizer)
-    ("classifier", MultinomialNB)
+    ("vectorizer", vectorizer),
+    ("classifier", MultinomialNB())
 ])
 
 # Define the parameter grid for hyperparameter tuning
@@ -141,7 +141,7 @@ new_messages = [
 ]
 
 # preprocess function that mirrors the training-time preprocessing
-def preproces_message(message):
+def preprocess_message(message):
     message = message.lower()
     message = re.sub(r"[^a-z\s$!]", "", message)
     tokens = word_tokenize(message)
