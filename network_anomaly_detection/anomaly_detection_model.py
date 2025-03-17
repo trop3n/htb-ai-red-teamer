@@ -81,3 +81,7 @@ numeric_features = [
 # combine encoded categorical variabls and numeric features
 train_set = encoded.join(df[numeric_features])
 multi_y = df['attack_map']
+
+# split data into training and test sets for multi-class classification
+train_X, test_X, train_y, test_y = train_test_split(train_set, multi_y, test_size=0.2, random_state=1337)
+multi_train_X, multi_val_X, multi_train_y, multi_val_y = train_test_split(train_X, train_y, test_size=0.3, random_state=1337)
