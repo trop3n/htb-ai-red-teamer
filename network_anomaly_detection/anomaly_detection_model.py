@@ -85,3 +85,34 @@ multi_y = df['attack_map']
 # split data into training and test sets for multi-class classification
 train_X, test_X, train_y, test_y = train_test_split(train_set, multi_y, test_size=0.2, random_state=1337)
 multi_train_X, multi_val_X, multi_train_y, multi_val_y = train_test_split(train_X, train_y, test_size=0.3, random_state=1337)
+
+# train RandomForest model for multi-class classification
+rf_model_multi = RandomForestClassifier(random_state=1337)
+rf_model_multi.fit(multi_train_X, multi_train_y)
+
+# predict and evaluate the model on the validation set
+multi_predictions = rf_model_multi.predict(multi_val_X)
+accuracy = accuracy_score(multi_val_y, multi_predictions)
+precision = precision_score(multi_val_y, multi_predictions, average='weighted')
+recall = recall_score(multi_val_y, multi_predictions, average='weighted')
+f1 = f1_score(multi_val_y, multi_predictions, average='weighted')
+print(f"Validation Set Evaluation:")
+print(f"Accuracy: {accuracy:.4f}")
+print(f"Precision: {precision:.4f}")
+print(f"Recall: {recall:.4f}")
+print(f"F1-Score: {f1:.4f}")
+
+# Confusion Matric for Validation Set
+conf_matrix = confusion_matrix(multi_val_y, multi_predictions)
+class_labels = ['Normal', 'DoS', 'Probe', 'Privilege', 'Access']
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues',
+            xticklabels=class_labels,
+            yticklabels=class_labels)
+plt.title('Network Anomaly Detection - Validation Set')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.show()
+
+# classification report for validation set
+print("Classification Report for Validation Set:")
+print(classification_report(multi_val_y, multi_predictions, target_names=class_labels))
