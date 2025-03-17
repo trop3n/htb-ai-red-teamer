@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import joblib
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
@@ -116,3 +117,29 @@ plt.show()
 # classification report for validation set
 print("Classification Report for Validation Set:")
 print(classification_report(multi_val_y, multi_predictions, target_names=class_labels))
+
+# final evaluation of the test set
+test_multi_predictions = rf_model_multi.predict(test_X)
+test_accuracy = accuracy_score(test_y, test_multi_predictions)
+test_precision = precision_score(test_y, test_multi_predictions, average='weighted')
+test_recall = recall_score(test_y, test_multi_predictions, average='weighted')
+test_f1 = f1_score(test_y, test_multi_predictions, average='weighted')
+print("\nTest Set Evaluation:")
+print(f"Accuracy: {test_accuracy:.4f}")
+print(f"Precision: {test_precision:.4f}")
+print(f"Recall: {test_recall:.4f}")
+print(f"F1-Score: {test_f1:.4f}")
+
+# Confusion Matrix for Test Set
+test_conf_matrix = confusion_matrix(test_y, test_multi_predictions)
+sns.heatmap(test_conf_matrix, annot=True, fmt='d', cmap='Blues',
+            xticklabels=class_labels,
+            yticklabels=class_labels)
+plt.title('Network Anomaly Detection')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.show()
+
+# Classification report for Test Set
+print("Classification Report for Test Set:")
+print(classification_report(test_y, test_multi_predictions, target_names=class_labels))
