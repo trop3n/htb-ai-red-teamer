@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
 
 # set the filepath to the dataset
-file_path = r'KDD.txt'
+file_path = r'KDD+.txt'
 
 # define the column names corresponding to the NSL-KDD dataset
 columns = [
@@ -59,7 +59,7 @@ df['attack_map'] = df['attack'].apply(map_attack)
 
 # encoding categorical variables
 features_to_encode = ['protocol_type', 'service']
-encoded = pd.get_dummies(df['features_to_encode'])
+encoded = pd.get_dummies(df[features_to_encode])
 
 # numeric features that capture various statistical properties of the traffic
 numeric_features = [
@@ -111,7 +111,7 @@ sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues',
 plt.title('Network Anomaly Detection - Validation Set')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
-#plt.show()
+plt.show()
 
 # Classification report for Validation set
 print("Classification Report for Validation Set")
@@ -139,7 +139,7 @@ sns.heatmap(test_conf_matrix, annot=True, fmt='d', cmap='Blues',
 plt.title('Network Anomaly Detection')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
-#plt.show
+#plt.show()
 
 # Classification Report for Test Set
 print("Classification Report for Test Set:")
