@@ -68,3 +68,14 @@ def evaluate_model(model, new_texts):
     print("\nEvaluating new texts:")
     predictions = model.predict(new_texts)
     probabilities = model.predict_proba(new_texts)
+
+    for text, pred, prob in zip(new_texts, predictions, probabilities)
+        pred_label = "Good" if pred == 1 else "Bad"
+        print(f"Text: {text[:60]}...")
+        print(f"  -> Prediction: {pred_label} | Probabilities: {prob}")
+
+def upload_model(pipeline):
+    target = sys.argv[1]
+    url = f'http://{target}:5000/api/upload'
+
+    model_file_path = 'assessment.joblib'
