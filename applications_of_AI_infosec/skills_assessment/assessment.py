@@ -79,3 +79,23 @@ def upload_model(pipeline):
     url = f'http://{target}:5000/api/upload'
 
     model_file_path = 'assessment.joblib'
+    with open(model_file_path, "rb") as model_file:
+        files = {"model": model_file}
+        response = requests.post(url, files=files)
+
+    print(json.dumps(response.json(), indent=4))
+
+if __name__ == "__main__":
+
+    if len(sys.argv) < 2:
+        print(f'Usage: {sys.argv[0]} <target_ip>')
+        sys.exit(1)
+
+    target = sys.argv[1]
+
+    download()
+    df = dataset()
+    df = preprocessing(df)
+
+    model = train_model(df)
+    
