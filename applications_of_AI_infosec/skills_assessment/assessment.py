@@ -45,5 +45,26 @@ def train_model(df):
         df["text"], df["label"], test_size=0.3, random_state=42
     )
     pipeline = Pipeline([
-        
+        ("vectorizer", CountVectorizer(
+            lowercase=True,
+            stop_words="english",
+            token_pattern=r"\b\w+\b",
+            ngram_range=(1, 2)
+        )),
+    ("classifier", MultinomialNB())
     ])
+
+    print("Training model...")
+    pipeline.fit(X_train, y_train)
+    print("Training complete!")
+
+    model_filename = "assessment.joblib"
+    joblib.dump(pipeline, model_filename)
+    print(f"Model saved to {model_filename}")
+
+    return pipeline
+
+def evaluate_model(model, new_texts):
+    print("\nEvaluating new texts:")
+    predictions = model.predict(new_texts)
+    probabilities = model.predict_proba(new_texts)
