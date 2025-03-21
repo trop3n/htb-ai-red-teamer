@@ -26,7 +26,7 @@ def dataset():
     df = pd.read_json("skills_assessment_data/train.json", orient="records")
     df.info()
     # Drop duplicates
-    df = drop_duplicates()
+    df = df.drop_duplicates()
     return df
 
 def clean_text(text):
@@ -69,7 +69,7 @@ def evaluate_model(model, new_texts):
     predictions = model.predict(new_texts)
     probabilities = model.predict_proba(new_texts)
 
-    for text, pred, prob in zip(new_texts, predictions, probabilities)
+    for text, pred, prob in zip(new_texts, predictions, probabilities):
         pred_label = "Good" if pred == 1 else "Bad"
         print(f"Text: {text[:60]}...")
         print(f"  -> Prediction: {pred_label} | Probabilities: {prob}")
