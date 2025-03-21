@@ -37,7 +37,7 @@ def clean_text(text):
 
 def preprocessing(df):
     df["text"] = df["text"].apply(lambda x: x.lower())
-    df["text"] = df["text"] = df.apply(clean_text)
+    df["text"] = df["text"].apply(clean_text)
     return df
 
 def train_model(df):
