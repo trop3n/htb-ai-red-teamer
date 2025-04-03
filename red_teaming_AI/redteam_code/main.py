@@ -88,8 +88,10 @@ def evaluate(model, dataset):
 # -------------------------------------------------------------------
 # Main
 
-model = train("./train.csv")
-
+model = train("./poison-student.csv")
+acc = evaluate(model, "./test.csv")
+print(f"Model accuracy: {round(acc*100, 2)}%")
+# running inference on given input message
 message = "Hello World! How are you doing?"
 
 predicted_class = classify_messages(model, message)[0]
@@ -100,6 +102,3 @@ print(f"Predicted class: {predicted_class_str}")
 print("Probabilities:")
 print(f"\t Ham: {round(probabilities[0]*100, 2)}%")
 print(f"\tSpam: {round(probabilities[1]*100, 2)}%")
-
-acc = evaluate(model, "./test.csv")
-print(f"Model accuracy: {round(acc*100, 2)}%")
