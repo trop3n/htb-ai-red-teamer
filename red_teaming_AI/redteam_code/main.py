@@ -89,10 +89,10 @@ def evaluate(model, dataset):
 # Main
 
 model = train("./poison-student.csv")
-acc = evaluate(model, "./test.csv")
+acc = evaluate(model, "./training_data.csv")
 print(f"Model accuracy: {round(acc*100, 2)}%")
 # running inference on given input message
-message = "Hello World! How are you doing?"
+message = "Hello there! We've seen you are a vivid user of Academy, and we appreciate for being active. Best Regards, HackTheBox"
 
 predicted_class = classify_messages(model, message)[0]
 predicted_class_str = "Ham" if predicted_class == 0 else "Spam"
