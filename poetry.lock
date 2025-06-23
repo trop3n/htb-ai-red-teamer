@@ -2406,6 +2406,21 @@ files = [
 ]
 
 [[package]]
+name = "split-folders"
+version = "0.5.1"
+description = "Split folders with files (e.g. images) into training, validation and test (dataset) folders."
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "split_folders-0.5.1-py3-none-any.whl", hash = "sha256:cb010e00f34d247b8e8bbfd6cfe527f871361d8524ed54734924e7efd261801f"},
+    {file = "split_folders-0.5.1.tar.gz", hash = "sha256:7127a226b90e00fa86cda4451fe015c6f3755bc3d627064adb9c5209fc8280f6"},
+]
+
+[package.extras]
+full = ["tqdm"]
+
+[[package]]
 name = "statsmodels"
 version = "0.14.4"
 description = "Statistical computations and models for Python"
@@ -3037,4 +3052,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "f6e638cac9f135ca7e9b14abc72c608703dcf493b9ea5065f690d84648aa906c"
+content-hash = "416bce874852e1fd1167736966cad87f7a1203537900d16499fabfb8e5ae153e"

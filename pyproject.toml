@@ -25,7 +25,8 @@ dependencies = [
     "torchvision (>=0.21.0,<0.22.0)",
     "torchaudio (>=2.6.0,<3.0.0)",
     "requests (>=2.32.3,<3.0.0)",
-    "requests-toolbelt (>=1.0.0,<2.0.0)"
+    "requests-toolbelt (>=1.0.0,<2.0.0)",
+    "split-folders (>=0.5.1,<0.6.0)"
 ]
 
 [tool.poetry]
