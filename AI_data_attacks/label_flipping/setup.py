@@ -43,3 +43,25 @@ SEED = 1337
 np.random.seed(SEED)
 
 print("Setup complete. Libraries imported and styles configured.")
+
+# Generate synthetic data
+n_samples = 1000
+centers = [(0, 5), (5, 0)] # Define centers for two distinct blobs
+X, y = make_blobs(
+    n_samples=n_samples,
+    centers=centers,
+    n_features=2,
+    cluster_std=1.25,
+    random_state=SEED,
+)
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=SEED
+)
+
+print(f"Generated {n_samples} samples.")
+print(f"Training set size: {X_train.shape[0]} samples.")
+print(f"Testing set size: {X_test.shape[0]} samples.")
+print(f"Number of features: {X_train.shape[1]}")
+print(f"Classes: {np.unique(y)}")
